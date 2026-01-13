@@ -11,32 +11,32 @@ Resnet-50/
 ├─ data/ # THÔNG TIN DỮ LIỆU
 │  ├─ splits/ # train_list.txt, val_list.txt
 │  ├─ meta/ # class_map.json, classes.txt, dataset_stats.json
-│  └─ tools/ # script tạo splits/meta từ dataset_root
-│     ├─ prepare_subtest_and_split.py 
-│     └─ verify.py
+│  └─ tools/
+│     ├─ prepare_subset_and_split.py  # Tool dành cho CUB
+│     └─ verify.py # Tool kiểm tra train_list.txt, val_list.txt
 │
 ├─ src/ # CODE CHÍNH
-│  ├─ __init__.py
+│  ├─ __init__.py # Đánh dấu src là một package để import
 │  │
 │  ├─ models/
-│  │  ├─ __init__.py
+│  │  ├─ __init__.py 
 │  │  └─ resnet50/
-│  │     ├─ __init__.py
-│  │     ├─ resnet50.py
+│  │     ├─ __init__.py 
+│  │     ├─ resnet50.py # hàm resnet50() build stem, bottleneck,...
 │  │     └─ blocks/
 │  │        ├─ __init__.py
-│  │        ├─ bottleneck.py
-│  │        ├─ conv_helpers.py
-│  │        └─ stem.py
+│  │        ├─ bottleneck.py # Bottleneck block chuẩn ResNet-50
+│  │        ├─ conv_helpers.py # Các hàm conv tiêu chuẩn Resnet
+│  │        └─ stem.py # stem của resnet
 │  │
 │  ├─ datasets/
 │  │  ├─ __init__.py
 │  │  ├─ imagenet_style/
 │  │  │  ├─ __init__.py
-│  │  │  └─ list_dataset.py
+│  │  │  └─ list_dataset.py # dataset dạng list file, đọc train_list.txt, val_list.txt
 │  │  └─ transforms/
 │  │     ├─ __init__.py
-│  │     └─ imagenet_transforms.py
+│  │     └─ imagenet_transforms.py # transform kiểu ImageNet
 │  │
 │  ├─ engine/
 │  │  ├─ __init__.py
@@ -56,7 +56,7 @@ Resnet-50/
 │  ├─ optim/
 │  │  ├─ __init__.py
 │  │  ├─ optimizer_factory.py
-│  │  └─ cheduler_factory.py
+│  │  └─ scheduler_factory.py
 │  │
 │  └─ utils/
 │     ├─ __init__.py
@@ -71,7 +71,7 @@ Resnet-50/
 │  └─ eval.py
 │
 ├─ notebook/ # Vẽ biểu đồ + tổng hợp best epoch/last epoch
-│  └─ plot_metrics.ipynb
+│  └─ plot_metric.ipynb
 │
 ├─ outputs/ # SINH RA SAU KHI CHẠY (bị .gitignore)
 │  └─ exp_001/
@@ -90,7 +90,7 @@ Mở PowerShell/CMD trong folder **Resnet50**:
 ```bash
 py -3.12 -m venv .venv
 ```
-## 2.2. Kích hoạt venv
+## 2.2. Cài pip
 ```bash
 .\.venv\Scripts\python.exe -m pip install -U pip
 ```
@@ -134,8 +134,8 @@ Bước này dùng để tạo dữ liệu đầu vào chuẩn cho dự án, c�
 -> “chuẩn hoá CUB” để project train/eval dễ, chạy được trên máy khác chỉ cần đổi `dataset_root`
 
 ## 5.2 Tool dùng để xử lý
-- Script: `data/tools/prepare_subset_and_split.py`
-- Script này sẽ:
+- Scripts: `data/tools/prepare_subset_and_split.py`
+- Scripts này sẽ:
     - đọc dataset từ `dataset_root`
     - lấy ra đúng **10,000 ảnh** (demo) và chia **90/10** thành train/val
     - sinh ra các file trong `data/splits/` và `data/meta/`
@@ -155,7 +155,7 @@ Sau khi chạy xong sẽ thấy các file sau:
 - *data/splits/val_list.txt*
 - *data/meta/class_map.json*
 - *data/meta/classes.txt*
-- *data/meta/dataset_stats.json*
+- *data/meta/dataset_stats.json* <br>
 Như vậy là đẫ xong cho chuẩn bị dữ liệu để train
 
 # 6. Train: chạy huấn luyện ResNet-50
@@ -163,7 +163,7 @@ Như vậy là đẫ xong cho chuẩn bị dữ liệu để train
 ## 6.1 Trước khi train cần chú ý:
 Mở `scripts/train_run.py` và sửa:
 - `dataset_root` : trỏ đúng nơi bạn giải nén CUB.
-- `out_dir` : thư mục lưu kết quả (Ví dụ: `outputs/exp_001`)
+- `out_dir` : thư mục lưu kết quả (Ví dụ: `outputs/exp_001`) <br>
 Sau khi chạy sẽ tự tạo folder `outputs/exp_001` (Có thể tùy chỉnh)
 
 ```python
@@ -184,7 +184,7 @@ train(
 ```
 ## 6.2 Chạy train
 ```bash
-.\.venv\Scripts\python.exe scripts\train.py
+.\.venv\Scripts\python.exe scripts\train_run.py
 ```
 ## 6.3 Output
 Trong `out_dir` sẽ có:
@@ -211,5 +211,6 @@ Nếu muốn vẽ biểu đồ dựa trên dữ liệu train (tự điều chỉ
 
 ```python
 from pathlib import Path
-EXP_DIR = Path(r"D:\24022440\ML\Resnet 50\outputs\exp_001") # Sửa trỏ đến đúng folder output tạo
+EXP_DIR = Path(r"outputs\exp_001") # Sửa trỏ đến đúng folder output tạo
 ```
+<!> Nếu không chạy được hãy thử hard-code đường dẫn trực tiếp từ ổ (VÍ dụ `C:\Resnet50\outputs\exp_001`)
