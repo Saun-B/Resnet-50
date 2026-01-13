@@ -109,8 +109,8 @@ py -3.12 -m venv .venv
 ```
 # 4. Hướng dẫn lấy Dataset
 ## 4.1. Dataset dùng trong demo
-Dự án dùng **CUB-200-2011 (Caltech-UCSD Birds 200-2011)** cho bài toán phân loại hình ảnh **200 lớp**
-Cấu hình demo: **10,000 ảnh**, split **90/10** (train 9,000 / val 1,000).
+- Dự án dùng **CUB-200-2011 (Caltech-UCSD Birds 200-2011)** cho bài toán phân loại hình ảnh **200 lớp**
+- Cấu hình demo: **10,000 ảnh**, split **90/10** (train 9,000 / val 1,000).
 ## 4.2. Cách tải Dataset
 - Mở đường link: **https://data.caltech.edu/records/65de6-vp158**
 - Tìm mục Files và download *CUB_200_2011.tgz*
@@ -134,11 +134,11 @@ Bước này dùng để tạo dữ liệu đầu vào chuẩn cho dự án, c�
 -> “chuẩn hoá CUB” để project train/eval dễ, chạy được trên máy khác chỉ cần đổi `dataset_root`
 
 ## 5.2 Tool dùng để xử lý
-Script: `data/tools/prepare_subset_and_split.py`
-Script này sẽ:
-- đọc dataset từ `dataset_root`
-- lấy ra đúng **10,000 ảnh** (demo) và chia **90/10** thành train/val
-- sinh ra các file trong `data/splits/` và `data/meta/`
+- Script: `data/tools/prepare_subset_and_split.py`
+- Script này sẽ:
+    - đọc dataset từ `dataset_root`
+    - lấy ra đúng **10,000 ảnh** (demo) và chia **90/10** thành train/val
+    - sinh ra các file trong `data/splits/` và `data/meta/`
 
 ## 5.3 Cách chạy tool
 Trong root chính **Resnet50**, chạy:
@@ -146,24 +146,24 @@ Trong root chính **Resnet50**, chạy:
 **Windows (PowerShell/CMD):**
 ```bash
 .\.venv\Scripts\python.exe data\tools\prepare_subset_and_split.py ^
-  --dataset_root "C:\Dataset\CUB_200_2011\CUB_200_2011" ^
+  --dataset_root "C:\Dataset\CUB_200_2011" ^
   --train_images_total 10000 ^
   --seed 42
 ```
 Sau khi chạy xong sẽ thấy các file sau:
--*data/splits/train_list.txt*
--*data/splits/val_list.txt*
--*data/meta/class_map.json*
--*data/meta/classes.txt*
--*data/meta/dataset_stats.json*
+- *data/splits/train_list.txt*
+- *data/splits/val_list.txt*
+- *data/meta/class_map.json*
+- *data/meta/classes.txt*
+- *data/meta/dataset_stats.json*
 Như vậy là đẫ xong cho chuẩn bị dữ liệu để train
 
 # 6. Train: chạy huấn luyện ResNet-50
 
 ## 6.1 Trước khi train cần chú ý:
 Mở `scripts/train_run.py` và sửa:
--`dataset_root` : trỏ đúng nơi bạn giải nén CUB.
--`out_dir` : thư mục lưu kết quả (Ví dụ: `outputs/exp_001`)
+- `dataset_root` : trỏ đúng nơi bạn giải nén CUB.
+- `out_dir` : thư mục lưu kết quả (Ví dụ: `outputs/exp_001`)
 Sau khi chạy sẽ tự tạo folder `outputs/exp_001` (Có thể tùy chỉnh)
 
 ```python
