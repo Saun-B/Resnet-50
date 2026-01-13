@@ -66,7 +66,7 @@ Resnet-50/
 │     ├─ metrics.py
 │     └─ seed.py
 │
-├─ scripts/ # Chạy train/eval (người dùng chỉ sửa path)
+├─ scripts/ # Chạy train/eval (chỉ sửa path)
 │  ├─ train_run.py 
 │  └─ eval.py
 │
@@ -102,10 +102,6 @@ py -3.12 -m venv .venv
 ## 3.2. Cài requirement
 ```bash
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-```
-## 3.3. Cài ipykernel nếu muốn dùng notebook vẽ biểu đồ
-```bash
-.\.venv\Scripts\python.exe -m pip install -U ipykernel
 ```
 # 4. Hướng dẫn lấy Dataset
 ## 4.1. Dataset dùng trong demo
@@ -207,7 +203,7 @@ Trong `out_dir` sẽ có:
 Nếu không chạy thì vẫn có thể xem Val Top-1/Top-5 bằng cách mở `outputs/exp_001/metrics.csv` vì val metrics theo từng epoch đã được lưu sẵn trong đó.
 
 # 8. Vẽ biểu đồ + tổng hợp best epoch trong Notebook
-Nếu muốn vẽ biểu đồ dựa trên dữ liệu train (tự điều chỉnh) hãy mở `notebook/plot_metrics.ipynb` và chỉnh:
+Nếu muốn vẽ biểu đồ dựa trên dữ liệu train (tự điều chỉnh) hãy mở `notebook/plot_metric.ipynb` và chỉnh:
 
 ```python
 from pathlib import Path
