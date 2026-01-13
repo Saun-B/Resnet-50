@@ -1,0 +1,20 @@
+{
+  "dataset": "CUB-200-2011",
+  "dataset_root": "C:\\Dataset\\CUB_200_2011",
+  "pool": "all",
+  "seed": 42,
+  "num_classes": 200,
+  "train_images_total": 10000,
+  "val_images_total": 1788,
+  "per_class_train_min_mean_max": [
+    41,
+    50.0,
+    52
+  ],
+  "per_class_val_min_mean_max": [
+    1,
+    9.361256544502618,
+    10
+  ],
+  "note": "train_list/val_list paths are relative to dataset_root; do not commit dataset into repo."
+}
