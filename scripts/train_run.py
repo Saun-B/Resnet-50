@@ -6,8 +6,7 @@ def main():
 
         # Chỉnh sửa dataset và folder đầu ra
         dataset_root=r"C:\Dataset\CUB_200_2011", 
-        out_dir="outputs/exp_002",
-        #-----------------------------------
+        out_dir="outputs/exp_001",
         
         num_classes=200,
         epochs=10,
