@@ -6,7 +6,6 @@ from torch.utils.data import DataLoader
 from .imagenet_style import ListFileImageDataset
 from .transforms import build_train_transforms, build_val_transforms
 
-
 def build_dataset(
     dataset_root: str | Path,
     split: str,

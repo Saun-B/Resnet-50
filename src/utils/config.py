@@ -1,5 +1,4 @@
 from __future__ import annotations
-
 from pathlib import Path
 
 def _deep_update(base: dict, new: dict) -> dict:

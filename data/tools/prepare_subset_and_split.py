@@ -79,15 +79,11 @@ def balanced_sample_per_class(
 
 def main():
     ap = argparse.ArgumentParser("Prepare CUB-200-2011 splits/meta for demo training.")
-    ap.add_argument("--dataset_root", type=str, required=True,
-                    help="Folder containing images/, images.txt, image_class_labels.txt, train_test_split.txt")
-    ap.add_argument("--train_images_total", type=int, default=10000,
-                    help="Total number of training images to sample (default=10000)")
-    ap.add_argument("--num_classes", type=int, default=200, help="CUB has 200 classes")
-    ap.add_argument("--pool", type=str, default="all", choices=["all", "official_train", "official_test"],
-                    help="Where to sample from: all images, official train only, or official test only")
-    ap.add_argument("--max_val_images", type=int, default=-1,
-                    help="Limit val images. -1 means use all remaining.")
+    ap.add_argument("--dataset_root", type=str, required=True)
+    ap.add_argument("--train_images_total", type=int, default=10000)
+    ap.add_argument("--num_classes", type=int, default=200)
+    ap.add_argument("--pool", type=str, default="all", choices=["all", "official_train", "official_test"])
+    ap.add_argument("--max_val_images", type=int, default=-1)
     ap.add_argument("--seed", type=int, default=42)
     args = ap.parse_args()
 
@@ -122,12 +118,12 @@ def main():
         raise RuntimeError("No records parsed. Check your CUB files.")
 
     if args.num_classes != 200:
-        print("[WARN] CUB-200-2011 normally has 200 classes. Continuing anyway...")
+        print("CUB-200-2011 normally has 200 classes.")
 
     if args.pool == "official_train":
         pool = [r for r in records if r[3] is True]
         if args.train_images_total > len(pool):
-            print(f"[WARN] pool=official_train only has {len(pool)} images, "
+            print(f"pool=official_train only has {len(pool)} images, "
                   f"but you requested train_images_total={args.train_images_total}. "
                   f"-> Switching pool to 'all' to satisfy 10k.")
             pool = records
@@ -135,7 +131,7 @@ def main():
     elif args.pool == "official_test":
         pool = [r for r in records if r[3] is False]
         if args.train_images_total > len(pool):
-            print(f"[WARN] pool=official_test only has {len(pool)} images, "
+            print(f"pool=official_test only has {len(pool)} images, "
                   f"but you requested train_images_total={args.train_images_total}. "
                   f"-> Switching pool to 'all'.")
             pool = records
@@ -159,7 +155,7 @@ def main():
 
     missing_labels = [c for c in range(args.num_classes) if c not in by_class]
     if missing_labels:
-        print(f"[WARN] Missing labels in pool (count={len(missing_labels)}). Example: {missing_labels[:10]}")
+        print(f"Missing labels in pool (count={len(missing_labels)}). Example: {missing_labels[:10]}")
 
     selected_train_ids = balanced_sample_per_class(by_class, args.train_images_total, rng)
     train_set = set(selected_train_ids)
@@ -219,11 +215,10 @@ def main():
             float(sum(per_class_val.values()) / max(1, len(per_class_val))),
             int(max(per_class_val.values())) if per_class_val else 0,
         ],
-        "note": "train_list/val_list paths are relative to dataset_root; do not commit dataset into repo."
     }
     (meta_dir / "dataset_stats.json").write_text(json.dumps(stats, indent=2), encoding="utf-8")
 
-    print("[DONE] Wrote:")
+    print("Wrote:")
     print(f"  - {splits_dir / 'train_list.txt'}  ({len(train_lines)} lines)")
     print(f"  - {splits_dir / 'val_list.txt'}    ({len(val_lines)} lines)")
     print(f"  - {meta_dir / 'class_map.json'}")

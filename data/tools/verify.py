@@ -20,8 +20,7 @@ def read_list(list_path: Path):
 
 def main():
     ap = argparse.ArgumentParser(description="Verify train_list/val_list against dataset_root.")
-    ap.add_argument("--dataset_root", type=str, required=True,
-                    help="CUB root folder containing images/ and metadata txt files")
+    ap.add_argument("--dataset_root", type=str, required=True)
     ap.add_argument("--train_list", type=str, default=None)
     ap.add_argument("--val_list", type=str, default=None)
     ap.add_argument("--class_map", type=str, default=None)
@@ -72,12 +71,12 @@ def main():
     val_set = set([r for r, _ in val_items])
     overlap = train_set.intersection(val_set)
 
-    print(f"[INFO] dataset_root: {dataset_root}")
-    print(f"[INFO] train: {len(train_items)} | val: {len(val_items)}")
+    print(f"dataset_root: {dataset_root}")
+    print(f"train: {len(train_items)} | val: {len(val_items)}")
     if num_classes is not None:
-        print(f"[INFO] num_classes (from class_map): {num_classes}")
+        print(f"num_classes (from class_map): {num_classes}")
 
-    print("\n=== CHECK RESULTS ===")
+    print("\nRESULTS")
     print(f"Missing files: train={train_missing}, val={val_missing}")
     if num_classes is not None:
         print(f"Bad labels:   train={train_bad}, val={val_bad}")
@@ -94,9 +93,9 @@ def main():
     summarize(val_counts, "VAL")
 
     if train_missing == 0 and val_missing == 0 and train_bad == 0 and val_bad == 0 and len(overlap) == 0:
-        print("\n[DONE] OK ✅")
+        print("\nok")
     else:
-        print("\n[DONE] Issues found ❌")
+        print("\nIssues found")
 
 if __name__ == "__main__":
     main()

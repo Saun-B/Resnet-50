@@ -112,7 +112,7 @@ def train(
         logger.info(f"Resumed from {resume_path} | start_epoch={start_epoch} | best_top1={best_top1:.2f}")
 
     for epoch in range(start_epoch, epochs + 1):
-        logger.info(f"========== Epoch {epoch}/{epochs} ==========")
+        logger.info(f"=== Epoch {epoch}/{epochs} ===")
 
         train_stats = train_one_epoch(
             model=model,
@@ -173,7 +173,7 @@ def train(
             best_path = out_dir / "best.pth"
             state["best_top1"] = best_top1
             save_checkpoint(state, best_path)
-            logger.info(f"New BEST top1={best_top1:.2f} -> saved {best_path}")
+            logger.info(f"New best top1={best_top1:.2f} -> saved {best_path}")
 
     csv_logger.close()
     logger.info(f"Training done. Best top1={best_top1:.2f}")

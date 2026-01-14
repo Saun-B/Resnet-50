@@ -9,7 +9,6 @@ from src.losses import build_criterion
 from src.utils import setup_logger, set_seed, load_checkpoint
 from src.engine.eval.evaluate import evaluate
 
-
 def main():
     # Chỉnh sửa ở đây
     DATASET_ROOT = r"C:\Dataset\CUB_200_2011"
@@ -21,7 +20,6 @@ def main():
     NUM_WORKERS  = 0
     SEED         = 42
     LOSS_NAME    = "ce"
-    #---------------
 
     exp_dir = Path(EXP_DIR)
     ckpt_path = exp_dir / CKPT_NAME
